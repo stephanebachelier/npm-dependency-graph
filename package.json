@@ -1,0 +1,26 @@
+{
+  "name": "npm-dependency-graph",
+  "version": "0.1.0",
+  "description": "NPM module dependency graph",
+  "main": "src/index.js",
+  "author": "Stéphane Bachelier <stephane.bachelier@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "lint": "standard src/**/*.js --fix | snazzy",
+    "format": "prettier-standard --format",
+    "release": "semantic-release"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@commitlint/cli": "^9.1.1",
+    "@commitlint/config-conventional": "^9.1.1",
+    "babel-eslint": "^10.1.0",
+    "conventional-changelog-cli": "^2.0.34",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "prettier-standard": "^16.4.1",
+    "snazzy": "^8.0.0",
+    "standard": "^14.3.4",
+    "yaml-lint": "^1.2.4"
+  }
+}
