@@ -1,13 +1,14 @@
 const fetchPkg = require('package-json')
 const toPairs = require('lodash/toPairs')
-const fromPairs = require('lodash/fromPairs')
 const compact = require('lodash/compact')
-const isUndefined = require('lodash/isUndefined')
 const kebabCase = require('lodash/kebabCase')
 const negate = require('lodash/negate')
 const flattenDeep = require('lodash/flattenDeep')
 const sortBy = require('lodash/sortBy')
 const fs = require('fs-extra')
+const LRUCache = require('mnemonist/lru-cache')
+
+const cache = new LRUCache(1000)
 
 const debug = require('debug')
 const log = {
@@ -23,45 +24,49 @@ scope.not = name => negate(scope(name))
 
 const applyFilter = (name, filter) => filter(name)
 
-const filterDeps = (deps, filter) =>
-  fromPairs(
-    compact(
-      toPairs(deps).map(([name, version]) =>
-        applyFilter(name, filter) ? [name, deps[name]] : null
-      )
-    )
-  )
-
-const parseDep = (filter, context) => async pkgQuery => {
+const parseDep = filter => async ({ name, version = 'latest' }) => {
   try {
-    if (context.isMarked(pkgQuery)) {
-      log.deps('found leaf %o', pkgQuery)
-      return dependency(pkgQuery)
+    log.parse('fetch %s@%s', name, version)
+    const pkgName = `${name}@${version}`
+    const value = cache.peek(pkgName)
+
+    if (value) {
+      log.tree('cache hit: %s', pkgName)
+      return value
     }
 
-    const { name, version = 'latest' } = pkgQuery
-
-    log.parse('fetch %s@%s', name, version)
     const pkg = await fetchPkg(name, { version })
 
-    context.markDep({
+    const mark = {
       name,
       version: pkg.version
-    })
+    }
 
-    return dependency(pkg, filter)
+    // avoid loop by marking first
+    cache.set(pkgName, mark)
+
+    const deps = dependency(pkg, filter)
+
+    cache.set(pkgName, deps)
+
+    return deps
   } catch (e) {
     log.deps('parsing error %o', e)
     return null
   }
 }
 
-const pkgDependencies = (pkg, name, filter) =>
-  !pkg[name]
-    ? []
-    : isUndefined(filter)
-    ? pkg[name]
-    : filterDeps(pkg[name], filter)
+const pkgDependencies = (pkg, type, filter) =>
+  compact(
+    toPairs(pkg[type]).map(([name, version]) =>
+      !applyFilter(name, filter)
+        ? null
+        : {
+            name,
+            version
+          }
+    )
+  )
 
 const leaf = ({ name, version } = {}) => ({
   name,
@@ -84,9 +89,9 @@ const walkDeps = async (node, { type, options, depth }) => {
 
   node[type] = (
     await Promise.allSettled(
-      Object.keys(node[type])
-        .map(name => [name, node[type][name]])
-        .map(([name, version]) => walk({ name, version }, options, depth + 1))
+      node[type].map(({ name, version }) =>
+        walk({ name, version }, options, depth + 1)
+      )
     )
   )
     .filter(({ status }) => status === 'fulfilled')
@@ -98,7 +103,6 @@ const walkDeps = async (node, { type, options, depth }) => {
 const walk = async (pkg, options = {}, depth) => {
   const { parse, mergeDeps = false, maxDepth } = options
 
-  log.deps('~~> %s@%s deps', pkg.name, pkg.version)
   const node = await parse(pkg)
 
   // run in sequence
@@ -117,15 +121,6 @@ const walk = async (pkg, options = {}, depth) => {
 
   return node
 }
-
-const parseContext = (list = []) => ({
-  isMarked ({ name, version }) {
-    list.includes(name)
-  },
-  markDep ({ name, version = '' }) {
-    list.push(name)
-  }
-})
 
 const flattenDependency = node => {
   const { dependencies = [], ...others } = node
@@ -148,7 +143,7 @@ const buildDepsTree = async (
   const tree = await walk(
     pkg,
     {
-      parse: parseDep(filter, parseContext()),
+      parse: parseDep(filter),
       mergeDeps: flatten || mergeDeps, // mergeDeps enforced with flatten
       maxDepth
     },
@@ -160,6 +155,10 @@ const buildDepsTree = async (
   }
 
   await fs.writeJson(outputFilename(pkg), flatten ? flattenTree(tree) : tree)
+
+  for (var [key, value] of cache) {
+    console.log(key, value)
+  }
 
   return tree
 }
