@@ -8,6 +8,9 @@
   "bin": {
     "deps-graph": "./bin/graph/index.js"
   },
+  "engines": {
+    "node": "12"
+  },
   "scripts": {
     "lint": "standard src/**/*.js --fix | snazzy",
     "format": "prettier-standard --format",
