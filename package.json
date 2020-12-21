@@ -5,15 +5,20 @@
   "main": "src/index.js",
   "author": "Stéphane Bachelier <stephane.bachelier@gmail.com>",
   "license": "MIT",
+  "bin": {
+    "deps-graph": "./bin/graph/index.js"
+  },
   "scripts": {
     "lint": "standard src/**/*.js --fix | snazzy",
     "format": "prettier-standard --format",
     "release": "semantic-release"
   },
   "dependencies": {
+    "chalk": "^4.1.0",
     "debug": "^4.1.1",
     "fs-extra": "^9.0.1",
     "lodash": "^4.17.19",
+    "meow": "^8.0.0",
     "package-json": "^6.5.0"
   },
   "devDependencies": {
