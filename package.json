@@ -12,7 +12,8 @@
     "node": "10"
   },
   "scripts": {
-    "lint": "standard src/**/*.js --fix | snazzy",
+    "lint": "standard src/**/*.js | snazzy",
+    "lint:ci": "standard src/**/*.js",
     "format": "prettier-standard --format"
   },
   "dependencies": {
