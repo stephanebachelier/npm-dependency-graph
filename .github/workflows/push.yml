@@ -28,7 +28,7 @@ jobs:
 
   publish:
     name: Publish
-    needs: test
+    needs: setup
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -58,8 +58,8 @@ jobs:
     runs-on: ubuntu-latest
     if: always()
     needs:
-      - test
       - setup
+      # - test
       - publish
     steps:
       - uses: technote-space/workflow-conclusion-action@v1
