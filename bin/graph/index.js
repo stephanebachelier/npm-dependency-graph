@@ -9,6 +9,9 @@ const cli = require('meow')(
 
     Options
     -------
+    - name (string)
+        default to kebabCase(name-version)  the name of the generated file
+
     - version <semver>
                                             if you need a dep tree for a specific version
 
@@ -32,6 +35,10 @@ const cli = require('meow')(
   `,
   {
     flags: {
+      name: {
+        type: 'string',
+        alias: 'n'
+      },
       version: {
         type: 'string',
         alias: 'v'
