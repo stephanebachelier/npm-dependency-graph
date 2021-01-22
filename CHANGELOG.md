@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/stephanebachelier/npm-dependency-graph/compare/v1.1.0...v1.2.0) (2021-01-22)
+
+
+### Features
+
+* add support for name option ([efa6bcb](https://github.com/stephanebachelier/npm-dependency-graph/commit/efa6bcb1dd97f850f8d534d898e6f3f7858552e1))
+
 # [1.1.0](https://github.com/stephanebachelier/npm-dependency-graph/compare/v1.0.0...v1.1.0) (2021-01-22)
 
 
