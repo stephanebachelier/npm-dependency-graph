@@ -1,3 +1,17 @@
+# [2.0.0](https://github.com/stephanebachelier/npm-dependency-graph/compare/v1.2.0...v2.0.0) (2021-01-22)
+
+
+### Features
+
+* add node 12 support ([3ccf7da](https://github.com/stephanebachelier/npm-dependency-graph/commit/3ccf7da389e095f8796c21549eb91838fa0e2d2f))
+
+
+### BREAKING CHANGES
+
+* switch to node 12
+
+Node 12.9+ has support for Promise.allSettled()
+
 # [1.2.0](https://github.com/stephanebachelier/npm-dependency-graph/compare/v1.1.0...v1.2.0) (2021-01-22)
 
 
