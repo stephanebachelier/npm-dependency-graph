@@ -9,7 +9,7 @@
     "deps-graph": "./bin/graph/index.js"
   },
   "engines": {
-    "node": "10"
+    "node": "12.16.3"
   },
   "scripts": {
     "lint": "standard src/**/*.js | snazzy",
@@ -17,7 +17,6 @@
     "format": "prettier-standard --format"
   },
   "dependencies": {
-    "bluebird": "^3.7.2",
     "chalk": "^4.1.0",
     "d3": "^6.3.1",
     "d3-node": "^2.2.2",

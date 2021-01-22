@@ -10,7 +10,7 @@ jobs:
     name: Release
     strategy:
       matrix:
-        node-version: [10.22]
+        node-version: [12.16.3]
 
     steps:
       - name: Checkout
@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2.1.4
         with:
-          node-version: '10.22'
+          node-version: '12.16.3'
 
       - name: Cache node modules
         uses: actions/cache@v2.1.3
