@@ -3,6 +3,7 @@ const fs = require('fs-extra')
 const sharp = require('sharp')
 
 const { buildChart } = require('./graph')
+const log = require('debug')('output')
 
 const baseName = pkg =>
   kebabCase(`${pkg.name.replace('/', '-')}-${pkg.version}`)
@@ -10,6 +11,7 @@ const baseName = pkg =>
 const fileName = (pkg, name, ext) => `${name || baseName(pkg)}.${ext}`
 
 const buildOutput = async (pkg, tree, { output, label, name = null } = {}) => {
+  log('generate %s output %s ', output, name)
   switch (output) {
     case 'svg': {
       const chart = await buildChart(tree, { label })
