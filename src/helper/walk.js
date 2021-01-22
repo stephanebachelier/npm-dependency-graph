@@ -92,7 +92,7 @@ const walk = async (pkg, options = {}, depth) => {
 
   // run in sequence
   if (depth >= maxDepth) {
-    log.tree('depth %s for node %o')
+    log.tree('found leaf %s', pkg.name)
     return leaf(node)
   }
 
