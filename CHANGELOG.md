@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/stephanebachelier/npm-dependency-graph/compare/v1.2.0...v1.2.1) (2021-01-22)
+
+
+### Bug Fixes
+
+* add output logs ([f4d6963](https://github.com/stephanebachelier/npm-dependency-graph/commit/f4d69638e91e387240af74fee35e61544f0bf354))
+
 # [1.2.0](https://github.com/stephanebachelier/npm-dependency-graph/compare/v1.1.0...v1.2.0) (2021-01-22)
 
 
