@@ -5,19 +5,37 @@ const cli = require('meow')(
   `
     Usage
     -----
-      $ deps-graph <name> [version]
+      $ deps-graph <name> or <name@version>
 
     Options
     -------
-    - scope @foo if you need to filter on a given scope.
-    - flatten if deps tree must be flattened
-    - maxDepth the maximum depth of the deps tree
-    - mergeDeps if the deps and peer deps should be merged
-    - output (json: default, png, or svg)
-    - label (name: default, version) display name only or name with version
+    - version <semver>
+                                            if you need a dep tree for a specific version
+
+    - scope (string) 
+        ex: @foo                            if you need to filter on a given scope.
+
+    - flatten (boolean)
+        default: false                      if deps tree must be flattened
+
+    - maxDepth (number)
+        default: 3                          the maximum depth of the deps tree
+
+    - mergeDeps (boolean)
+        default: false                      if the deps and peer deps should be merged
+
+    - output (json, png, or svg)
+        default: json                       the file type of the generated output
+
+    - label (name, version)
+        default: name                       display either name or name with version for nodes
   `,
   {
     flags: {
+      version: {
+        type: 'string',
+        alias: 'v'
+      },
       scope: {
         type: 'string',
         alias: 's'
