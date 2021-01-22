@@ -5,7 +5,16 @@ const cli = require('meow')(
   `
     Usage
     -----
-      $ graph <name> [version]
+      $ deps-graph <name> [version]
+
+    Options
+    -------
+    - scope @foo if you need to filter on a given scope.
+    - flatten if deps tree must be flattened
+    - maxDepth the maximum depth of the deps tree
+    - mergeDeps if the deps and peer deps should be merged
+    - output (json: default, png, or svg)
+    - label (name: default, version) display name only or name with version
   `,
   {
     flags: {
@@ -29,9 +38,9 @@ const cli = require('meow')(
         type: 'boolean',
         alias: 'm'
       },
-      registryUrl: {
+      label: {
         type: 'string',
-        alias: 'r'
+        alias: 'l'
       }
     }
   }
