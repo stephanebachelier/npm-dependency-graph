@@ -1,0 +1,9 @@
+# 1.0.0 (2021-01-22)
+
+
+### Features
+
+* add node 10 support ([deb333e](https://github.com/stephanebachelier/npm-dependency-graph/commit/deb333e5aea7354ef48420665ccbf5a50668d0a1))
+* complete graph output ([5131379](https://github.com/stephanebachelier/npm-dependency-graph/commit/5131379834e5451a6fa2533cba7ff558c3dddb92))
+* implement deps tree ([9cc02bd](https://github.com/stephanebachelier/npm-dependency-graph/commit/9cc02bda6a6a9a52fe8769bc5874dd3fca3626a3))
+* implement deps-graph command ([83fd254](https://github.com/stephanebachelier/npm-dependency-graph/commit/83fd254adb04d750a4f92b891a5872b6025734ea))
