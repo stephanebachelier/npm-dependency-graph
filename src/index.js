@@ -1,7 +1,8 @@
 const log = require('debug')('tree')
 const negate = require('lodash/negate')
-
-const { parseTree, parseDep } = require('./helper')
+const get = require('lodash/get')
+const { parseTree, parseDep } = require('./helper/walk')
+const { buildOutput } = require('./helper/output')
 
 const scope = name => dep => dep.startsWith(name)
 
@@ -11,7 +12,7 @@ const buildDepsTree = async (pkg, options = {}) => {
   log('build deps tree for %s@%s', pkg.name, pkg.version)
   const { filter } = options
 
-  return parseTree(
+  const tree = await parseTree(
     pkg,
     {
       ...options,
@@ -19,6 +20,11 @@ const buildDepsTree = async (pkg, options = {}) => {
     },
     0
   )
+
+  await buildOutput(pkg, tree, {
+    output: get(options, 'output', 'json'),
+    label: get(options, 'label', 'name')
+  })
 }
 
 module.exports = buildDepsTree

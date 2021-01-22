@@ -1,11 +1,9 @@
 const fetchPkg = require('package-json')
 const toPairs = require('lodash/toPairs')
 const compact = require('lodash/compact')
-const kebabCase = require('lodash/kebabCase')
 const flattenDeep = require('lodash/flattenDeep')
 const sortBy = require('lodash/sortBy')
 const LRUCache = require('mnemonist/lru-cache')
-const fs = require('fs-extra')
 
 const cache = new LRUCache(1000)
 
@@ -32,14 +30,10 @@ const parseDep = filter => async ({ name, version = 'latest' }) => {
 
     const pkg = await fetchPkg(name, { version })
 
-    const mark = {
-      name,
-      version: pkg.version
-    }
-
     // avoid loop by marking first
-    cache.set(pkgName, mark)
+    cache.set(pkgName, leaf(pkg))
 
+    log.tree('caching %s ~> %o', pkgName, leaf(pkg))
     const deps = dependency(pkg, filter)
 
     cache.set(pkgName, deps)
@@ -56,10 +50,7 @@ const pkgDependencies = (pkg, type, filter) =>
     toPairs(pkg[type]).map(([name, version]) =>
       !applyFilter(name, filter)
         ? null
-        : {
-          name,
-          version
-        }
+        : { name, version }
     )
   )
 
@@ -102,7 +93,8 @@ const walk = async (pkg, options = {}, depth) => {
 
   // run in sequence
   if (depth >= maxDepth) {
-    return leaf(pkg)
+    log.tree('depth %s for node %o')
+    return leaf(node)
   }
 
   await walkDeps(node, { type: 'dependencies', options, depth })
@@ -127,15 +119,12 @@ const flattenDependency = node => {
 const flattenTree = ({ dependencies } = {}) =>
   sortBy(flattenDeep(flattenDependency({ dependencies })), ['name'])
 
-const outputFilename = pkg =>
-  `${kebabCase(`${pkg.name.replace('/', '-')}-${pkg.version}`)}.json`
-
 module.exports = {
   parseDep,
 
   parseTree: async (
     pkg,
-    { output, parse, mergeDeps = false, maxDepth = 10, flatten = false } = {}
+    { parse, mergeDeps = false, maxDepth = 10, flatten = false } = {}
   ) => {
     log.tree('build deps tree for %s@%s', pkg.name, pkg.version)
     const tree = await walk(
@@ -148,12 +137,6 @@ module.exports = {
       0
     )
 
-    if (output === false) {
-      return tree
-    }
-
-    await fs.writeJson(outputFilename(pkg), flatten ? flattenTree(tree) : tree)
-
-    return tree
+    return flatten ? flattenTree(tree) : tree
   }
 }
