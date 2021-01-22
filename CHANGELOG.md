@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/stephanebachelier/npm-dependency-graph/compare/v1.0.0...v1.1.0) (2021-01-22)
+
+
+### Features
+
+* **bin:** add support for version in name or as a flag ([55e2e03](https://github.com/stephanebachelier/npm-dependency-graph/commit/55e2e031f7b77d116c0f2a3e444debae459d44e1))
+* **walk:** set default depth to 3 ([3b989eb](https://github.com/stephanebachelier/npm-dependency-graph/commit/3b989eb15d1c6716e0be726920c52f3b4984fb5f))
+
 # 1.0.0 (2021-01-22)
 
 
