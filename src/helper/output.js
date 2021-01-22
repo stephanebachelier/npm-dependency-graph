@@ -7,9 +7,9 @@ const { buildChart } = require('./graph')
 const baseName = pkg =>
   kebabCase(`${pkg.name.replace('/', '-')}-${pkg.version}`)
 
-const fileName = (pkg, ext) => `${baseName(pkg)}.${ext}`
+const fileName = (pkg, name, ext) => `${name || baseName(pkg)}.${ext}`
 
-const buildOutput = async (pkg, tree, { output, label } = {}) => {
+const buildOutput = async (pkg, tree, { output, label, name = null } = {}) => {
   switch (output) {
     case 'svg': {
       const chart = await buildChart(tree, { label })
@@ -25,16 +25,16 @@ const buildOutput = async (pkg, tree, { output, label } = {}) => {
           background: '#fff'
         })
         .png()
-        .toFile(fileName(pkg, 'png'))
+        .toFile(fileName(pkg, name, 'png'))
     }
 
     case 'json': {
-      return fs.writeJson(fileName(pkg, 'json'), tree)
+      return fs.writeJson(fileName(pkg, name, 'json'), tree)
     }
 
     default: {
       console.log('Invalid output => using json')
-      return fs.writeJson(fileName(pkg, 'json'), tree)
+      return fs.writeJson(fileName(pkg, name, 'json'), tree)
     }
   }
 }

@@ -23,7 +23,8 @@ const buildDepsTree = async (pkg, options = {}) => {
 
   await buildOutput(pkg, tree, {
     output: get(options, 'output', 'json'),
-    label: get(options, 'label', 'name')
+    label: get(options, 'label', 'name'),
+    name: get(options, 'name')
   })
 }
 
