@@ -123,7 +123,7 @@ module.exports = {
 
   parseTree: async (
     pkg,
-    { parse, mergeDeps = false, maxDepth = 10, flatten = false } = {}
+    { parse, mergeDeps = false, maxDepth = 3, flatten = false } = {}
   ) => {
     log.tree('build deps tree for %s@%s', pkg.name, pkg.version)
     const tree = await walk(
