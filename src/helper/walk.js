@@ -4,7 +4,6 @@ const compact = require('lodash/compact')
 const flattenDeep = require('lodash/flattenDeep')
 const sortBy = require('lodash/sortBy')
 const LRUCache = require('mnemonist/lru-cache')
-const { allSettled } = require('./promise')
 
 const cache = new LRUCache(1000)
 
@@ -73,7 +72,7 @@ const walkDeps = async (node, { type, options, depth }) => {
   }
 
   node[type] = (
-    await allSettled(
+    await Promise.allSettled(
       node[type].map(({ name, version }) =>
         walk({ name, version }, options, depth + 1)
       )
