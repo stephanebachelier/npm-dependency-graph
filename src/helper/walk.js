@@ -4,6 +4,7 @@ const compact = require('lodash/compact')
 const flattenDeep = require('lodash/flattenDeep')
 const sortBy = require('lodash/sortBy')
 const LRUCache = require('mnemonist/lru-cache')
+const { allSettled } = require('./promise')
 
 const cache = new LRUCache(1000)
 
@@ -48,9 +49,7 @@ const parseDep = filter => async ({ name, version = 'latest' }) => {
 const pkgDependencies = (pkg, type, filter) =>
   compact(
     toPairs(pkg[type]).map(([name, version]) =>
-      !applyFilter(name, filter)
-        ? null
-        : { name, version }
+      !applyFilter(name, filter) ? null : { name, version }
     )
   )
 
@@ -74,7 +73,7 @@ const walkDeps = async (node, { type, options, depth }) => {
   }
 
   node[type] = (
-    await Promise.allSettled(
+    await allSettled(
       node[type].map(({ name, version }) =>
         walk({ name, version }, options, depth + 1)
       )
