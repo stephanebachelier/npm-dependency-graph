@@ -1,3 +1,11 @@
+## [2.0.1](https://github.com/stephanebachelier/npm-dependency-graph/compare/v2.0.0...v2.0.1) (2021-02-02)
+
+
+### Bug Fixes
+
+* **npm:** fix node engine version ([94c7d10](https://github.com/stephanebachelier/npm-dependency-graph/commit/94c7d100c9727467ebb0eb3b90c135ac4d55a37c))
+* add output logs ([2b566ae](https://github.com/stephanebachelier/npm-dependency-graph/commit/2b566ae9801faab2929ba56ca42bd76157061a14))
+
 # [2.0.0](https://github.com/stephanebachelier/npm-dependency-graph/compare/v1.2.0...v2.0.0) (2021-01-22)
 
 
