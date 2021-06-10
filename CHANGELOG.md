@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/stephanebachelier/npm-dependency-graph/compare/v2.1.0...v2.1.1) (2021-06-10)
+
+
+### Bug Fixes
+
+* **scope-filter:** fix scope negation and default bypass filter ([177e0c1](https://github.com/stephanebachelier/npm-dependency-graph/commit/177e0c1e112b4670613810645acb37004b547404))
+
 # [2.1.0](https://github.com/stephanebachelier/npm-dependency-graph/compare/v2.0.1...v2.1.0) (2021-06-10)
 
 
