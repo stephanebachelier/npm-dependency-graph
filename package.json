@@ -28,6 +28,7 @@
     "meow": "^8.0.0",
     "mnemonist": "^0.38.1",
     "package-json": "^6.5.0",
+    "promise.allsettled": "^1.0.4",
     "sharp": "^0.26.3"
   },
   "devDependencies": {
@@ -41,9 +42,9 @@
     "git-cz": "^4.6.2",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
+    "npm-merge-driver": "^2.3.5",
     "prettier": "^2.0.5",
     "prettier-standard": "^16.4.1",
-    "npm-merge-driver": "^2.3.5",
     "semantic-release": "^17.3.6",
     "snazzy": "^8.0.0",
     "standard": "^14.3.4",
