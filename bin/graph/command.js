@@ -1,6 +1,7 @@
 const buildDepsTree = require('../../src')
 const log = require('debug')('bin')
 const fetchPkg = require('package-json')
+const constant = require('lodash/constant')
 
 module.exports = async ({ name, version = 'latest', options = {} }) => {
   log('build deps tree for %s with options %o', name, options)
@@ -18,9 +19,7 @@ module.exports = async ({ name, version = 'latest', options = {} }) => {
   const pkg = await fetchPkg(pkgInfos.name, { version: pkgInfos.version })
   const { scope } = options
 
-  if (scope) {
-    options.filter = buildDepsTree.filters.scope(scope)
-  }
+  options.filter = scope ? buildDepsTree.filters.scope(scope) : constant(true)
 
   return buildDepsTree(pkg, options)
 }

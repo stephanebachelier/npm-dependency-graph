@@ -4,9 +4,15 @@ const get = require('lodash/get')
 const { parseTree, parseDep } = require('./helper/walk')
 const { buildOutput } = require('./helper/output')
 
-const scope = name => dep => dep.startsWith(name)
+const scope = name => {
+  if (!name.startsWith('!')) {
+    return dep => dep.startsWith(name)
+  }
 
-scope.not = name => negate(scope(name))
+  const needle = name.substr(1)
+
+  return negate(dep => dep.startsWith(needle))
+}
 
 const buildDepsTree = async (pkg, options = {}) => {
   log('build deps tree for %s@%s', pkg.name, pkg.version)
