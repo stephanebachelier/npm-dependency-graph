@@ -5,6 +5,8 @@ const flattenDeep = require('lodash/flattenDeep')
 const sortBy = require('lodash/sortBy')
 const LRUCache = require('mnemonist/lru-cache')
 
+require('promise.allsettled').shim()
+
 const cache = new LRUCache(1000)
 
 const debug = require('debug')
