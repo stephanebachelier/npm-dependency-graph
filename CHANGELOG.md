@@ -1,3 +1,15 @@
+# [2.1.0](https://github.com/stephanebachelier/npm-dependency-graph/compare/v2.0.1...v2.1.0) (2021-06-10)
+
+
+### Bug Fixes
+
+* **bin/graph:** fix erroneous log output about default version used ([dcd7480](https://github.com/stephanebachelier/npm-dependency-graph/commit/dcd74804713db47e8963d9543040ab4489e517ce))
+
+
+### Features
+
+* **helper:** switch to allSettled shim ([880de46](https://github.com/stephanebachelier/npm-dependency-graph/commit/880de46ac1250f77d4e1573594c0e46bedf287ce))
+
 ## [2.0.1](https://github.com/stephanebachelier/npm-dependency-graph/compare/v2.0.0...v2.0.1) (2021-02-02)
 
 
