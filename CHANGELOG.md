@@ -1,3 +1,10 @@
+## [2.1.2](https://github.com/stephanebachelier/npm-dependency-graph/compare/v2.1.1...v2.1.2) (2021-06-14)
+
+
+### Bug Fixes
+
+* **yarn:** fix fs-extra@10.0.0 issue ([53e917d](https://github.com/stephanebachelier/npm-dependency-graph/commit/53e917ded1fd554f760797366f812172e3c2204a))
+
 ## [2.1.1](https://github.com/stephanebachelier/npm-dependency-graph/compare/v2.1.0...v2.1.1) (2021-06-10)
 
 
